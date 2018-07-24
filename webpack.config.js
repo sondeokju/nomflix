@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    entry: ["babel-polifill","./src/index.js"],   
+    entry: ["babel-polyfill","./src/index.js"],   
     module: {
         rules: [
             {
@@ -14,6 +14,23 @@ module.exports = {
                 use: {
                     loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                {
+                    loader: "style-loader"
+                },
+                {
+                    loader: "css-loader",
+                    options: {
+                        importLoaders: 1
+                    }
+                },
+                {
+                    loader: "postcss-loader"
+                }
+              ]
             }
         ]
     },
@@ -21,7 +38,7 @@ module.exports = {
         contentBase: path.join(__dirname, "src"),
         publicPath: "/",
         progress: true,
-        port: 8082
+        port: 8080
     },
     output: {
         path: path.join(__dirname, "dist"),
